@@ -4,9 +4,11 @@ from .models import Bill,Payment
 from rest_framework.response import Response
 from .serializers import BillSerializer
 from rest_framework.viewsets import ModelViewSet
+from core.permissions import CustomPermission
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
+
 #ModelViewset chai class base ko lagi 
-
-
 # Create your views here.
 
 # function based view: use gare ko ho
@@ -20,10 +22,15 @@ from rest_framework.viewsets import ModelViewSet
 class BillView(ModelViewSet):
     queryset = Bill.objects.all()
     serializer_class = BillSerializer
+    permission_classes = [CustomPermission]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['guest']
+    Search_fieldsr = ['amount', ]
 
     def list(self, request):
         queryset = self.get_queryset()
-        serializer = self.serializer_class(queryset,many=True)
+        filter_queryset = self.filter_queryset(queryset)
+        serializer = self.serializer_class(filter_queryset,many=True)
         return Response(serializer.data)
     
     def create(self, request):

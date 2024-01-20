@@ -15,4 +15,4 @@ class EmployeeInfo(models.Model):
     name = models.CharField(max_length=255)
     number = models.IntegerField()
     photo = models.ImageField(upload_to='employe_image')
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)

@@ -1,7 +1,10 @@
 from rest_framework import serializers
 from .models import Bill,Payment
+from frontdesk.serializers import GuestInfoSerializer
+
 
 class BillSerializer(serializers.ModelSerializer):
+    guest = GuestInfoSerializer()
     class Meta:
         model = Bill
         fields = '__all__'
